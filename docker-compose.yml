@@ -1,0 +1,21 @@
+services:
+  express-app:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+  nginx:
+    build:
+      context: ./nginx
+    ports:
+    # Expose port 80 for Nginx
+      - "80:80"
+    depends_on:
+      - express-app
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
